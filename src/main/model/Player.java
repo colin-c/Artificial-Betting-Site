@@ -12,12 +12,16 @@ public class Player {
         this.fund = fund;
     }
 
-    // REQUIRES: fund >= 0
-    //           amount >= 0
+    // REQUIRES: amount >= 0
     // MODIFIES: this
     // EFFECTS: add amount onto fund
-    public void manuallyAddFund(int amount) {
-        this.fund += amount;
+    public boolean manuallyAddFund(int amount) {
+        if (amount >= 0) {
+            this.fund += amount;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // REQUIRES: fund >= amount >= 0

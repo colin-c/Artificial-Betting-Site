@@ -22,23 +22,36 @@ public class PlayerTest {
 
     @Test
     void testManuallyAddFund() {
-        player.manuallyAddFund(15);
+        assertFalse(player.manuallyAddFund(-1));
+
+        assertTrue(player.manuallyAddFund(15));
         assertEquals(15, player.getFund());
+
+        assertTrue(player.manuallyAddFund(0));
+        assertEquals(15,player.getFund());
     }
 
     @Test
     void testManuallyAddFundOne() {
-        player.manuallyAddFund(1);
+        assertTrue(player.manuallyAddFund(1));
         assertEquals(1, player.getFund());
     }
 
     @Test
     void testManuallyAddFundMultiple() {
-        player.manuallyAddFund(5);
-        player.manuallyAddFund(1);
-        player.manuallyAddFund(151);
+        assertTrue(player.manuallyAddFund(5));
+        assertTrue(player.manuallyAddFund(1));
+        assertTrue(player.manuallyAddFund(151));
 
         assertEquals(157, player.getFund());
+
+        assertFalse(player.manuallyAddFund(-5));
+        assertFalse(player.manuallyAddFund(-10));
+        assertFalse(player.manuallyAddFund(-1));
+
+        assertEquals(157, player.getFund());
+
+
     }
 
     @Test
