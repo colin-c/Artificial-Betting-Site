@@ -59,30 +59,30 @@ public class BetTest {
         assertEquals(2, bet.getPlayers().size());
 
         assertTrue(bet.removePlayer(p1));
-        assertEquals(1,bet.getPlayers().size());
+        assertEquals(1, bet.getPlayers().size());
 
         assertFalse(bet.removePlayer(p3));
-        assertEquals(1,bet.getPlayers().size());
+        assertEquals(1, bet.getPlayers().size());
         assertFalse(bet.removePlayer(p1));
-        assertEquals(1,bet.getPlayers().size());
+        assertEquals(1, bet.getPlayers().size());
 
         assertTrue(bet.removePlayer(p2));
-        assertEquals(0,bet.getPlayers().size());
+        assertEquals(0, bet.getPlayers().size());
     }
 
     @Test
     void testAddTotalPot() {
-        assertEquals(0,bet.getTotalPot());
+        assertEquals(0, bet.getTotalPot());
 
         bet.addTotalPot(0);
-        assertEquals(0,bet.getTotalPot());
+        assertEquals(0, bet.getTotalPot());
 
         bet.addTotalPot(100);
-        assertEquals(100,bet.getTotalPot());
+        assertEquals(100, bet.getTotalPot());
 
         bet.addTotalPot(50);
         bet.addTotalPot(25);
-        assertEquals(175,bet.getTotalPot());
+        assertEquals(175, bet.getTotalPot());
 
     }
 
@@ -91,10 +91,10 @@ public class BetTest {
         bet.addPlayer(p1);
         bet.addTotalPot(100);
 
-        assertEquals(100,p1.getFund());
+        assertEquals(100, p1.getFund());
 
         bet.winBet(p1);
-        assertEquals(0,bet.getTotalPot());
+        assertEquals(0, bet.getTotalPot());
         assertEquals(200, p1.getFund());
 
     }
