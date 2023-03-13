@@ -54,17 +54,17 @@ class JsonReaderTest extends JsonTest {
         }
     }
 
-//    @Test
-//    void testReader() {
-//        JsonReader reader = new JsonReader("./data/testWriterGeneralWorkroom.json");
-//        try {
-//            Game game = reader.read();
-//            assertEquals("game", game.getTitle());
-//            ArrayList<Bet> bets = game.getBets();
-//            ArrayList<Player> players = game.getPlayers();
-//            checkBet("b1","d1", players, bets.get(0));
-//        } catch (IOException e) {
-//            fail("Exception should not have been thrown");
-//        }
-//    }
+    @Test
+    void testReader() {
+        JsonReader reader = new JsonReader("./data/testReader.json");
+        try {
+            Game game = reader.read();
+            assertEquals("game", game.getTitle());
+            ArrayList<Bet> bets = game.getBets();
+            ArrayList<Player> players = game.getPlayers();
+            checkBet("b1","d1", bets.get(0).getPlayers(), bets.get(0));
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
 }
