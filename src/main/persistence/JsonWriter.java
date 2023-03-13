@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Bet;
+import model.Game;
 import model.Player;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,14 +32,9 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of workroom to file
-    public void write(List<Bet> bets, List<Player> players) {
+    public void write(Game game) {
 
-        JSONObject jsonSample = new JSONObject();
-        jsonSample.put("bet", bets);
-        jsonSample.put("player", players);
-
-        JSONObject json = new JSONObject();
-        json.put("game", jsonSample);
+        JSONObject json = game.toJson();
         saveToFile(json.toString(TAB));
     }
 

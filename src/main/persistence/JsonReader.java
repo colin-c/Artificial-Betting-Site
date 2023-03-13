@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Bet;
+import model.Game;
 import model.Player;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ import org.json.*;
 
 // CITATION: model after the JsonSerializationDemo sample application
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads bets and players from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -24,9 +25,9 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads bets and players from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public ArrayList<Object> read() throws IOException {
+    public Game read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseGame(jsonObject);
@@ -44,58 +45,66 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    private ArrayList<Object> parseGame(JSONObject jsonObject) {
-        ArrayList<Object> game = new ArrayList<>();
-        game.add(parseBet(jsonObject));
-        game.add(parsePlayer(jsonObject));
+    // EFFECTS: adds parseBet and parsePlayer into a single list
+    private Game parseGame(JSONObject jsonObject) {
+        String name = jsonObject.getString("game");
+        Game game = new Game(name,new ArrayList<>(), new ArrayList<>());
+        addAllBets(game, jsonObject);
+        addAllPlayers(game, jsonObject);
 
         return game;
     }
 
-
-    private ArrayList<Player> parsePlayer(JSONObject jsonObject) {
-        JSONObject jsonGame = jsonObject.getJSONObject("game");
-        JSONArray jsonPlayer = jsonGame.getJSONArray("player");
-        ArrayList<Player> players = new ArrayList<>();
-
-        for (int i = 0; i < jsonPlayer.length(); i++) {
-            String name = jsonPlayer.getJSONObject(i).getString("name");
-            int fund = jsonPlayer.getJSONObject(i).getInt("fund");
-            Player player = new Player(name, fund);
-            players.add(player);
+    private void addAllPlayers(Game game, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("allplayers");
+        for (Object json : jsonArray) {
+            JSONObject nextPlayer = (JSONObject) json;
+            addPlayerToGame(game, nextPlayer);
         }
-        return players;
-    }
-
-    // EFFECTS: parses workroom from JSON object and returns it
-    private ArrayList<Bet> parseBet(JSONObject jsonObject) {
-        JSONObject jsonGame = jsonObject.getJSONObject("game");
-        JSONArray jsonBet = jsonGame.getJSONArray("bet");
-        ArrayList<Bet> bets = new ArrayList<>();
-
-        for (int i = 0; i < jsonBet.length(); i++) {
-            String betTitle = jsonBet.getJSONObject(i).getString("betTitle");
-            String betDescription = jsonBet.getJSONObject(i).getString("betDescription");
-            int totalPot = jsonBet.getJSONObject(i).getInt("totalPot");
-            List<Player> players = new ArrayList<>();
-            Bet bet = new Bet(betTitle, betDescription, (ArrayList<Player>) players);
-            addPlayer(bet, jsonObject, i);
-            bets.add(bet);
-        }
-        return bets;
     }
 
     // MODIFIES: bet
-    // EFFECTS: parses thingy from JSON object and adds it to bet
-    private void addPlayer(Bet bet, JSONObject jsonObject, int i) {
-        JSONObject jsonGame = jsonObject.getJSONObject("game");
-        JSONArray jsonBet = jsonGame.getJSONArray("bet");
-        JSONArray jsonPlayers = jsonBet.getJSONObject(i).getJSONArray("players");
-        for (int j = 0; j < jsonPlayers.length(); j++) {
-            String name = jsonPlayers.getJSONObject(j).getString("name");
-            int fund = jsonPlayers.getJSONObject(j).getInt("fund");
-            Player player = new Player(name, fund);
-            bet.addPlayer(player);
+    // EFFECTS: parse player from JSON object and adds it to workroom
+    private void addPlayerToGame(Game game, JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        int fund = jsonObject.getInt("fund");
+        Player player = new Player(name, fund);
+        game.addPlayer(player);
+    }
+
+    private void addAllBets(Game game, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("allbets");
+        for (Object json : jsonArray) {
+            JSONObject nextBet = (JSONObject) json;
+            addBet(game, nextBet);
         }
+    }
+
+    private void addBet(Game game, JSONObject jsonObject) {
+        String betTitle = jsonObject.getString("betTitle");
+        String betDescription = jsonObject.getString("betDescription");
+        int totalPot = jsonObject.getInt("totalPot");
+        ArrayList<Player> players = new ArrayList<>();
+        Bet bet = new Bet(betTitle, betDescription, players);
+        bet.addTotalPot(totalPot);
+        addPlayersToBet(bet,jsonObject);
+        game.addBet(bet);
+    }
+
+    private void addPlayersToBet(Bet bet, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("players");
+        for (Object json : jsonArray) {
+            JSONObject nextPlayer = (JSONObject) json;
+            addPlayer(bet, nextPlayer);
+        }
+    }
+
+    // MODIFIES: bet
+    // EFFECTS: parse player from JSON object and adds it to workroom
+    private void addPlayer(Bet bet, JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        int fund = jsonObject.getInt("fund");
+        Player player = new Player(name, fund);
+        bet.addPlayer(player);
     }
 }

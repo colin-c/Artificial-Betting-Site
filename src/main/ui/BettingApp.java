@@ -1,6 +1,7 @@
 package ui;
 
 import model.Bet;
+import model.Game;
 import model.Player;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class BettingApp {
 
     private static final String JSON_STORE = "./data/betApp.json";
-    private ArrayList<Object> game;
+    private Game game;
     private ArrayList<Bet> bets;
     private ArrayList<Player> players;
     private Scanner input;
@@ -30,9 +31,9 @@ public class BettingApp {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         input = new Scanner(System.in);
-        game = new ArrayList<>();
         bets = new ArrayList<>();
         players = new ArrayList<>();
+        game = new Game("game",bets, players);
 
         runApp();
     }
@@ -406,7 +407,7 @@ public class BettingApp {
     private void saveBettingApp() {
         try {
             jsonWriter.open();
-            jsonWriter.write(bets, players);
+            jsonWriter.write(game);
             jsonWriter.close();
             System.out.println("Game state saved to " + JSON_STORE);
         } catch (FileNotFoundException e) {
@@ -415,12 +416,12 @@ public class BettingApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads betting app from file
     private void loadBettingApp() {
         try {
             game = jsonReader.read();
-            bets = (ArrayList<Bet>) game.get(0);
-            players = (ArrayList<Player>) game.get(1);
+            bets = game.getBets();
+            players = game.getPlayers();
             System.out.println("Loaded previous file to " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

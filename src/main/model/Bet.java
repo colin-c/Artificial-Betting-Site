@@ -101,6 +101,7 @@ public class Bet implements Writable {
         return json;
     }
 
+    // EFFECTS: returns players in this bet as a JSON array
     private JSONArray playersToJson() {
         JSONArray jsonArray = new JSONArray();
 

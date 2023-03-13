@@ -18,4 +18,5 @@ public class JsonTest {
         assertEquals(description, bet.getBetDescription());
         assertIterableEquals(players, bet.getPlayers());
     }
+
 }

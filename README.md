@@ -40,3 +40,7 @@ exiting turn of events.
   use to gamble with others
 - As a user, I want to be able to create bets and add players to those bets
 - As a user, I want to be able to select which player wins the bet and takes the entire pot
+
+- As a user, I want to be able to save all my current players and bets
+- As a user, I want to be able to load my previously saved files
+- 
