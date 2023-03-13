@@ -16,7 +16,7 @@ import org.json.*;
 
 // CITATION: model after the JsonSerializationDemo sample application
 
-// Represents a reader that reads bets and players from JSON data stored in file
+// Represents a reader that reads game from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -25,7 +25,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads bets and players from file and returns it;
+    // EFFECTS: reads game from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Game read() throws IOException {
         String jsonData = readFile(source);
@@ -45,7 +45,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: adds parseBet and parsePlayer into a single list
+    // EFFECTS: parses game from JSON object and returns it
     private Game parseGame(JSONObject jsonObject) {
         String name = jsonObject.getString("game");
         Game game = new Game(name,new ArrayList<>(), new ArrayList<>());
@@ -63,8 +63,8 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: bet
-    // EFFECTS: parse player from JSON object and adds it to workroom
+    // MODIFIES: game
+    // EFFECTS: parse player from JSON object and adds it to game
     private void addPlayerToGame(Game game, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int fund = jsonObject.getInt("fund");
@@ -72,6 +72,8 @@ public class JsonReader {
         game.addPlayer(player);
     }
 
+    // MODIFIES: game
+    // EFFECTS: parse bets from JSON object and adds them to game
     private void addAllBets(Game game, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("allbets");
         for (Object json : jsonArray) {
@@ -80,6 +82,8 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: game
+    // EFFECTS: parse bet from JSON object and adds it to game
     private void addBet(Game game, JSONObject jsonObject) {
         String betTitle = jsonObject.getString("betTitle");
         String betDescription = jsonObject.getString("betDescription");
@@ -91,6 +95,8 @@ public class JsonReader {
         game.addBet(bet);
     }
 
+    // MODIFIES: bet
+    // EFFECTS: parse player from JSON object and adds them to bet
     private void addPlayersToBet(Bet bet, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("players");
         for (Object json : jsonArray) {
@@ -100,7 +106,7 @@ public class JsonReader {
     }
 
     // MODIFIES: bet
-    // EFFECTS: parse player from JSON object and adds it to workroom
+    // EFFECTS: parse player from JSON object and adds it to bet
     private void addPlayer(Bet bet, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int fund = jsonObject.getInt("fund");
