@@ -1,5 +1,8 @@
-package model;
+package persistence;
 
+import model.Bet;
+import model.Game;
+import model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
