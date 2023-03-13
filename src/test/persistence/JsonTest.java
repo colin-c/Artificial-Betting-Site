@@ -16,7 +16,7 @@ public class JsonTest {
     protected void checkBet(String title, String description, ArrayList<Player> players, Bet bet) {
         assertEquals(title, bet.getBetTitle());
         assertEquals(description, bet.getBetDescription());
-        assertIterableEquals(players, bet.getPlayers());
+        assertTrue(players.equals(bet.getPlayers()));
     }
 
 }

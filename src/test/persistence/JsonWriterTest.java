@@ -49,9 +49,10 @@ class JsonWriterTest extends JsonTest {
     void testWriterGeneralWorkroom() {
         try {
             Game game = new Game("game", new ArrayList<>(), new ArrayList<>());
-            game.addBet(new Bet("b", "d", new ArrayList<>()));
             game.addPlayer(new Player("n1", 0));
             game.addPlayer(new Player("n2", 10));
+            ArrayList<Player> betPlayers = game.getPlayers();
+            game.addBet(new Bet("b", "d", new ArrayList<>()));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralWorkroom.json");
             writer.open();
             writer.write(game);
@@ -73,4 +74,5 @@ class JsonWriterTest extends JsonTest {
             fail("Exception should not have been thrown");
         }
     }
+
 }

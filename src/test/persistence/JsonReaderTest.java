@@ -53,4 +53,18 @@ class JsonReaderTest extends JsonTest {
             fail("Couldn't read from file");
         }
     }
+
+//    @Test
+//    void testReader() {
+//        JsonReader reader = new JsonReader("./data/testWriterGeneralWorkroom.json");
+//        try {
+//            Game game = reader.read();
+//            assertEquals("game", game.getTitle());
+//            ArrayList<Bet> bets = game.getBets();
+//            ArrayList<Player> players = game.getPlayers();
+//            checkBet("b1","d1", players, bets.get(0));
+//        } catch (IOException e) {
+//            fail("Exception should not have been thrown");
+//        }
+//    }
 }
