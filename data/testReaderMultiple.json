@@ -1,0 +1,30 @@
+{
+  "game": "game",
+  "allbets": [
+    {
+      "totalPot": 0,
+      "players": [
+        {
+          "fund": 0,
+          "name": "n1"
+        },
+        {
+          "fund": 10,
+          "name": "n2"
+        }
+      ],
+      "betTitle": "b1",
+      "betDescription": "d1"
+    }
+  ],
+  "allplayers": [
+    {
+      "fund": 0,
+      "name": "n1"
+    },
+    {
+      "fund": 10,
+      "name": "n2"
+    }
+  ]
+}

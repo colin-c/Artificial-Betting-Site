@@ -67,4 +67,18 @@ class JsonReaderTest extends JsonTest {
             fail("Exception should not have been thrown");
         }
     }
+
+    @Test
+    void testReaderMultiple() {
+        JsonReader reader = new JsonReader("./data/testReaderMultiple.json");
+        try {
+            Game game = reader.read();
+            assertEquals("game", game.getTitle());
+            ArrayList<Bet> bets = game.getBets();
+            ArrayList<Player> players = game.getPlayers();
+            checkBet("b1","d1", bets.get(0).getPlayers(), bets.get(0));
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
 }
