@@ -1,13 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
-public class Bet {
+// // Represent a bet that player(s) can partake in
+public class Bet implements Writable {
 
     private String betTitle;
     private String betDescription;
-    private int wager;
-    private int reward;
     private int totalPot;
     private ArrayList<Player> players;
 
@@ -86,6 +89,27 @@ public class Bet {
 
     public int getTotalPot() {
         return totalPot;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("betTitle", betTitle);
+        json.put("betDescription", betDescription);
+        json.put("totalPot", totalPot);
+        json.put("players", playersToJson());
+        return json;
+    }
+
+    private JSONArray playersToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Player p : players) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
+
     }
 
 }

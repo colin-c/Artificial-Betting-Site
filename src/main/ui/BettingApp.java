@@ -2,22 +2,38 @@ package ui;
 
 import model.Bet;
 import model.Player;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 // Virtual betting site application
 public class BettingApp {
 
+    private static final String JSON_STORE = "./data/betApp.json";
+    private ArrayList<Object> game;
     private ArrayList<Bet> bets;
     private ArrayList<Player> players;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
 
     // EFFECTS: runs the betting application
-    public BettingApp() {
+    public BettingApp() throws FileNotFoundException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        input = new Scanner(System.in);
+        game = new ArrayList<>();
+        bets = new ArrayList<>();
+        players = new ArrayList<>();
+
         runApp();
     }
 
@@ -26,8 +42,6 @@ public class BettingApp {
     private void runApp() {
         boolean running = true;
         String command = null;
-        players = new ArrayList<>();
-        bets = new ArrayList<>();
 
         init();
 
@@ -59,6 +73,10 @@ public class BettingApp {
             command = input.next();
             command = command.toLowerCase();
             processCommandPlayerMenu(command);
+        } else if (command.equals("s")) {
+            saveBettingApp();
+        } else if (command.equals("l")) {
+            loadBettingApp();
         } else {
             System.out.println("Invalid selection...");
         }
@@ -107,10 +125,12 @@ public class BettingApp {
         System.out.println("Enter starting fund");
         int fund = input.nextInt();
 
+
         Player p = new Player(name, fund);
         players.add(p);
 
         System.out.println("New player " + p.getName() + " with $" + p.getFund() + " was created!");
+
     }
 
     // EFFECTS: see a list of existing players
@@ -158,6 +178,7 @@ public class BettingApp {
         }
     }
 
+    // REQUIRES: player to be existing
     // MODIFIES: this
     // EFFECTS: remove a player
     private void deletePlayer() {
@@ -178,7 +199,6 @@ public class BettingApp {
             }
         }
 
-
     }
 
     // MODIFIES: this
@@ -196,6 +216,7 @@ public class BettingApp {
         System.out.println("Bet: '" + betTitle + "' has been successfully added!");
     }
 
+    // EFFECTS: view all the existing bets
     private void viewBet() {
         int index = 0;
         for (Bet bet : bets) {
@@ -214,6 +235,7 @@ public class BettingApp {
 
     }
 
+    // EFFECTS: view all the players currently participating in a bet
     private ArrayList<String> playersInBet(Bet bet) {
         ArrayList<Player> list = bet.getPlayers();
         ArrayList<String> names = new ArrayList<>();
@@ -223,6 +245,8 @@ public class BettingApp {
         return names;
     }
 
+    // MODIFIES: this
+    // EFFECTS: edit the existing bet
     private void editBet() {
         System.out.println("Please type the index of the bet you wish to edit");
         int index = 0;
@@ -268,6 +292,8 @@ public class BettingApp {
                 + bet.getBetTitle() + "' bet");
     }
 
+    // MODIFIES: this
+    // EFFECTS: all fund goes to the player that won the bet
     private void winnerOfBet(Bet bet) {
         System.out.println("Type the index of the player who won:");
         int index = 0;
@@ -284,8 +310,10 @@ public class BettingApp {
         bet.changeBetTitle(bet.getBetTitle() + " (DONE)");
     }
 
+    // MODIFIES: this
+    // EFFECTS: change bet title or description
     private void changeTitleOrDescription(Bet b) {
-        System.out.println("Select one of the following:");
+        System.out.println("\nSelect one of the following:");
         System.out.println("\tt -> to change the title of the bet");
         System.out.println("\td -> to change the description of the bet");
 
@@ -328,6 +356,8 @@ public class BettingApp {
         System.out.println("\nPlease select an option:");
         System.out.println("\tb -> bet options");
         System.out.println("\tp -> player options");
+        System.out.println("\ts -> save Betting Profile");
+        System.out.println("\tl -> load Betting Profile");
         System.out.println("\te -> exit");
 
     }
@@ -357,6 +387,7 @@ public class BettingApp {
         System.out.println("\tr -> return to main menu");
     }
 
+    // EFFECTS: display edit-bet menu of options to user
     private void displayEditBetMenu() {
         System.out.println("\nSelect one of the following options:");
         System.out.println("\ta -> add a player to bet");
@@ -370,4 +401,33 @@ public class BettingApp {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
+
+    // EFFECTS: saves the betting app
+    private void saveBettingApp() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(bets, players);
+            jsonWriter.close();
+            System.out.println("Game state saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadBettingApp() {
+        try {
+            game = jsonReader.read();
+            bets = (ArrayList<Bet>) game.get(0);
+            players = (ArrayList<Player>) game.get(1);
+            System.out.println("Loaded previous file to " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+
 }
+
+
