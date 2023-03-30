@@ -4,7 +4,7 @@
 
 An artificial gambling site that focuses on player betting. Similar to sports betting, users
 can add *players* and place bets, winning or losing their imaginary funds based on the 
-number of users and odds.
+number of users and total pot.
 
 Possible Features:
 - Create events for people to be hold bets
@@ -43,4 +43,3 @@ exiting turn of events.
 
 - As a user, I want to be able to save all my current players and bets
 - As a user, I want to be able to load my previously saved files
-- 
