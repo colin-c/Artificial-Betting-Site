@@ -588,6 +588,7 @@ public class BetGUI extends JFrame {
                     JOptionPane.showMessageDialog(null, winnerImagePanel, "Winner!", JOptionPane.PLAIN_MESSAGE);
                     selectedBet.winBet(selectedPlayer);
                     updateTableBet();
+                    updateTablePlayer();
                     winnerFrame.dispose();
                 }
             }

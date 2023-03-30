@@ -43,3 +43,22 @@ exiting turn of events.
 
 - As a user, I want to be able to save all my current players and bets
 - As a user, I want to be able to load my previously saved files
+
+
+# Instructions for Grader
+
+- You can generate the first required action related to adding Xs to a Y by first going to the player tab. Press the create
+  player button and type in a string for the name and an integer for the starting fund. Now go to the bet tab and press the
+  create bet button to create a new bet. Type in strings for both the title and descriptions. Once a bet is made, go press the 
+  edit bet button and then the add player button. Double-click on the row of the player you wish to add and type in the integer
+  of the amount of fund you would like it to bet.
+- You can generate the second required action related to adding Xs to a Y by going back to the player tab. Here, you have
+  the option to edit or delete an existing player. Pressing the edit button will offer changes to name and funds of the
+  selected player. Pressing the delete button will remove the selected player. Same thing can be done with the bet tab and 
+  each of the individual bets (i.e. edit, remove).
+- You can locate my visual component by looking at the home tab. You can find another visual component by pressing the winner??
+  button in the bet's tab. (NOTE: a bet must first be made with at least one player in it) After confirming a winner, then another
+  visual component will appear.
+- You can save the state of my application by pressing the save button located in the home tab. NOTE: pressing save will
+  overwrite the previous save file as it can only maintain a single save file at a time.
+- You can reload the state of my application by pressing the load button located in the home tab.
