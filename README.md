@@ -62,3 +62,77 @@ exiting turn of events.
 - You can save the state of my application by pressing the save button located in the home tab. NOTE: pressing save will
   overwrite the previous save file as it can only maintain a single save file at a time.
 - You can reload the state of my application by pressing the load button located in the home tab.
+
+
+
+## Phase 4: Task 2
+
+Wed Apr 12 22:20:39 PDT 2023
+Player 'Cloin C' has been created with $1000
+
+Wed Apr 12 22:20:45 PDT 2023
+Player 'Alu' has been created with $500
+
+Wed Apr 12 22:20:54 PDT 2023
+Alu has changed its name to Alu W
+
+Wed Apr 12 22:20:54 PDT 2023
+$500 removed from Alu W's account
+
+Wed Apr 12 22:20:54 PDT 2023
+$1000 added to Alu W's account
+
+Wed Apr 12 22:21:03 PDT 2023
+'Bet One' has been created
+
+Wed Apr 12 22:21:12 PDT 2023
+'Bet One' has changed its title to 'First Bet'
+
+Wed Apr 12 22:21:24 PDT 2023
+'empty' has changed its description to 'Both players are betting $500'
+
+Wed Apr 12 22:21:29 PDT 2023
+$500 removed from Cloin C's account
+
+Wed Apr 12 22:21:29 PDT 2023
+Cloin C has been added this bet 'First Bet'
+
+Wed Apr 12 22:21:29 PDT 2023
+The pot for 'First Bet' is now $500
+
+Wed Apr 12 22:21:35 PDT 2023
+$500 removed from Alu W's account
+
+Wed Apr 12 22:21:35 PDT 2023
+Alu W has been added this bet 'First Bet'
+
+Wed Apr 12 22:21:35 PDT 2023
+The pot for 'First Bet' is now $500
+
+Wed Apr 12 22:21:43 PDT 2023
+Cloin C has won the bet 'First Bet'
+
+Wed Apr 12 22:21:43 PDT 2023
+$1000 added to Cloin C's account
+
+
+
+## Phase 4: Task 3
+Looking back at this project, there would have been quite a few things I would have done
+differently in order to improve the design. One major change would be to split up the BetGUI class
+into multiple subclasses. Rather than having the entire GUI code in a single class, I would split it up into many more
+classes, preferably having each side panel as its own class and perhaps instantiating some interfaces or abstract classes
+for the different panels within those side panels, as many of them share common elements. 
+This way, I am able to implement the Single Responsibility Principle, which can help with 
+maintainability and extensibility of my project.
+
+Another change I would do is removing the Game class entirely. The only reason I had to add a third model class was because I
+could not find a way to save the project into a JSON file without having to create a "new" object to umbrella my lists of bets
+and players. If I had more time, I could have perhaps debugged the issue without have to create unnecessary additions to my project. 
+However, I may also not conduct such a change as my original idea was to create other game modes for the user, meaning this 
+Game class would eventually be implemented had I follow through with that idea.
+
+One more minor change I would have done is kept the consistency with the BettingApp console class. In the backend aspect 
+of the project, I could have kept the consistency of having the user either input a string or type an index to follow through
+with an action rather than having both. Although this would not have changed much, it would have kept the project cleaner and
+consistent, which is an important aspect when it comes to the programming world.

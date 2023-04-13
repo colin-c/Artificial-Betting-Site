@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -90,6 +92,12 @@ public class BetGUI extends JFrame {
         frame.setTitle("Bet Haven");
         frame.setSize(1000, 600);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                super.windowClosed(e);
+            }
+        });
     }
 
     // EFFECTS: create a new instance for the field

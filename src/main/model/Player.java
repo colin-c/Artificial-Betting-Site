@@ -13,6 +13,8 @@ public class Player implements Writable {
     public Player(String name, int fund) {
         this.name = name;
         this.fund = fund;
+        EventLog.getInstance().logEvent(new Event("Player '" + name
+                + "' has been created with $" + fund));
     }
 
     // REQUIRES: amount >= 0
@@ -21,6 +23,8 @@ public class Player implements Writable {
     public boolean manuallyAddFund(int amount) {
         if (amount >= 0) {
             this.fund += amount;
+            EventLog.getInstance().logEvent(new Event("$" + amount + " added"
+                    + " to " + this.name + "'s account"));
             return true;
         } else {
             return false;
@@ -33,6 +37,8 @@ public class Player implements Writable {
     public boolean manuallyRemoveFund(int amount) {
         if (amount <= fund) {
             this.fund -= amount;
+            EventLog.getInstance().logEvent(new Event("$" + amount + " removed"
+                    + " from " + this.name + "'s account"));
             return true;
         } else {
             return false;
@@ -43,6 +49,8 @@ public class Player implements Writable {
     // MODIFIES: this
     // EFFECTS: change the name of the player
     public void changeName(String name) {
+        EventLog.getInstance().logEvent(new Event(this.name + " has changed"
+                + " its name to " + name));
         this.name = name;
     }
 

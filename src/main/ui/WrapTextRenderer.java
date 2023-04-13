@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
+
+// EFFECTS: refactor the size of the boxes
 public class WrapTextRenderer extends JTextArea implements TableCellRenderer {
     public WrapTextRenderer() {
         setLineWrap(true);

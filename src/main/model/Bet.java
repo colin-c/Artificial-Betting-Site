@@ -20,6 +20,8 @@ public class Bet implements Writable {
         this.betDescription = description;
         this.players = new ArrayList<>();
         this.totalPot = 0;
+        EventLog.getInstance().logEvent(new Event("'" + this.betTitle
+                + "' has been created"));
     }
 
     // REQUIRES: unique name not already added in the bet
@@ -30,6 +32,8 @@ public class Bet implements Writable {
             return false;
         } else {
             players.add(p);
+            EventLog.getInstance().logEvent(new Event(p.getName() + " has been added this bet '"
+                    + this.betTitle + "'"));
             return true;
         }
     }
@@ -52,6 +56,8 @@ public class Bet implements Writable {
     // EFFECTS: increase the totalPot size by i
     public void addTotalPot(int i) {
         this.totalPot += i;
+        EventLog.getInstance().logEvent(new Event("The pot for '"
+                + this.betTitle + "' is now $" + i));
     }
 
     // REQUIRES: players.size() > 0
@@ -59,6 +65,8 @@ public class Bet implements Writable {
     // EFFECTS: add totalPot to player's fund and reduce totalPot to 0
     public void winBet(Player p) {
         System.out.println("Congrats to " + p.getName() + " for winning $" + totalPot);
+        EventLog.getInstance().logEvent(new Event(p.getName() + " has won the bet '"
+                + this.betTitle + "'"));
         p.manuallyAddFund(totalPot);
         this.totalPot = 0;
     }
@@ -66,12 +74,16 @@ public class Bet implements Writable {
     // MODIFIES: this
     // EFFECTS: change the bet title
     public void changeBetTitle(String title) {
+        EventLog.getInstance().logEvent(new Event("'" + this.betTitle + "'"
+                + " has changed its title to '" + title + "'"));
         this.betTitle = title;
     }
 
     // MODIFIES: this
     // EFFECTS: change the bet description
     public void changeBetDescription(String description) {
+        EventLog.getInstance().logEvent(new Event("'" + this.betDescription + "'"
+                + " has changed its description to '" + description + "'"));
         this.betDescription = description;
     }
 
