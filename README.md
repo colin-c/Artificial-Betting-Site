@@ -1,4 +1,4 @@
-# Artificial Gambling Site
+# Bet Haven
 
 ## Functionality
 
